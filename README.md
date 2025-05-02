@@ -20,18 +20,18 @@ Es necesario tener instalado:
 Consulte con su soporte de sistemas operativos para saber cómo instalar los paquetes necesarios para una compilación.
 Ejemplos:
 ### Arch Linux & Arch-based
-´´´
+```
   sudo pacman -Syu base-devel
-´´´
+```
 ### Debian, Ubuntu & Debian-based
-´´´
+```
   sudo apt-get update
   sudo apt-get install build-essential
-´´´
+```
 ### Fedora, CentOS, RHEL & derivados
-´´´
+```
   sudo yum groupinstall "Development Tools"
-´´´
+```
 
 
 Se deben contar con las siguientes bibilotecas:
