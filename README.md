@@ -4,7 +4,7 @@
 
 ![HAProxy logo](doc/HAProxyCommunityEdition_60px.png)
 
-Este proyecto contiene un fork de HAProxy con un algoritmo agregado
+Este repositorio consta de un fork de HAProxy con un algoritmo de balanceo de carga agregado. Investigamos la posibildad del aprendiajo por refuerzo profundo para el scheduling eficiente.
 
 ## Pasos para ejecutar
 
