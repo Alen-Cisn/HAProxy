@@ -1,0 +1,25 @@
+{
+        "version": "2.0.0",
+        "tasks": [
+            {
+                "label": "Build Project",
+                "type": "shell",
+                "command": "make",
+                "args": [
+                    "-j",
+                    "${env:NUMBER_OF_PROCESSORS:-1}",
+                    "TARGET=linux-glibc",
+                    "USE_PCRE2=1",
+                    "ADDLIB=-ljemalloc",
+                    "CPU_CFLAGS=-march=native",
+                    "USE_GETADDRINFO=1"
+                ],
+                "group": {
+                    "kind": "build",
+                    "isDefault": true
+                },
+                "problemMatcher": ["$gcc"]
+            }
+        ]
+    }
+    

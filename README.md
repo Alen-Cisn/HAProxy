@@ -1,30 +1,45 @@
-# HAProxy
+# HAProxy con scheduling basado en aprendizaje por refuerzo
 
-[![alpine/musl](https://github.com/haproxy/haproxy/actions/workflows/musl.yml/badge.svg)](https://github.com/haproxy/haproxy/actions/workflows/musl.yml)
-[![AWS-LC](https://github.com/haproxy/haproxy/actions/workflows/aws-lc.yml/badge.svg)](https://github.com/haproxy/haproxy/actions/workflows/aws-lc.yml)
-[![openssl no-deprecated](https://github.com/haproxy/haproxy/actions/workflows/openssl-nodeprecated.yml/badge.svg)](https://github.com/haproxy/haproxy/actions/workflows/openssl-nodeprecated.yml)
-[![Illumos](https://github.com/haproxy/haproxy/actions/workflows/illumos.yml/badge.svg)](https://github.com/haproxy/haproxy/actions/workflows/illumos.yml)
-[![NetBSD](https://github.com/haproxy/haproxy/actions/workflows/netbsd.yml/badge.svg)](https://github.com/haproxy/haproxy/actions/workflows/netbsd.yml)
-[![FreeBSD](https://api.cirrus-ci.com/github/haproxy/haproxy.svg?task=FreeBSD)](https://cirrus-ci.com/github/haproxy/haproxy/)
-[![VTest](https://github.com/haproxy/haproxy/actions/workflows/vtest.yml/badge.svg)](https://github.com/haproxy/haproxy/actions/workflows/vtest.yml)
+[![HAProxy](https://github.com/haproxy/haproxy)](https://github.com/haproxy/haproxy)
 
 ![HAProxy logo](doc/HAProxyCommunityEdition_60px.png)
 
-HAProxy is a free, very fast and reliable reverse-proxy offering high availability, load balancing, and proxying for TCP
-and HTTP-based applications.
+Este proyecto contiene un fork de HAProxy con un algoritmo agregado
 
-## Installation
+## Pasos para ejecutar
 
-The [INSTALL](INSTALL) file describes how to build HAProxy.
-A [list of packages](https://github.com/haproxy/wiki/wiki/Packages) is also available on the wiki.
 
-## Getting help
 
-The [discourse](https://discourse.haproxy.org/) and the [mailing-list](https://www.mail-archive.com/haproxy@formilux.org/)
-are available for questions or configuration assistance. You can also use the [slack](https://slack.haproxy.org/) or
-[IRC](irc://irc.libera.chat/%23haproxy) channel. Please don't use the issue tracker for these.
+Los cambios están configurados para un sistema GNU/Linux-glibc.
 
-The [issue tracker](https://github.com/haproxy/haproxy/issues/) is only for bug reports or feature requests.
+Es necesario tener instalado:
+ - GNU Make >= 3.8
+ - GCC >= 4.7 (c11 atomics)
+ - GNU ld
+
+Consulte con su soporte de sistemas operativos para saber cómo instalar los paquetes necesarios para una compilación.
+Ejemplos:
+### Arch Linux & Arch-based
+´´´
+  sudo pacman -Syu base-devel
+´´´
+### Debian, Ubuntu & Debian-based
+´´´
+  sudo apt-get update
+  sudo apt-get install build-essential
+´´´
+### Fedora, CentOS, RHEL & derivados
+´´´
+  sudo yum groupinstall "Development Tools"
+´´´
+
+
+Se deben contar con las siguientes bibilotecas:
+ - PCRE2
+ - jemalloc
+ - ONNX Runtime
+ - OpenSSL
+ - libslz
 
 ## Documentation
 
@@ -58,5 +73,6 @@ The more detailed documentation is located into the doc/ directory:
 
 ## License
 
-HAProxy is licensed under [GPL 2](doc/gpl.txt) or any later version, the headers under [LGPL 2.1](doc/lgpl.txt). See the
-[LICENSE](LICENSE) file for a more detailed explanation.
+HAProxy está licenciado bajo [GPL 2](doc/gpl.txt) o cualquier versión siguiente, los headers bajo [LGPL 2.1](doc/lgpl.txt). Lee
+[LICENSE](LICENSE) para una explicación más detallada.
+Los cambios realizados por nosotros caen bajo la licencia [GPL 3](docs/gpl3.txt).

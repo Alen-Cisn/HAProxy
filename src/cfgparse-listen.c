@@ -2218,7 +2218,7 @@ stats_error_parsing:
 				else if (curproxy->logformat.str == default_tcp_log_format)
 					oldlogformat = "option tcplog";
 				else if (curproxy->logformat.str == clf_tcp_log_format)
-				    oldlogformat = "option tcplog clf";
+					oldlogformat = "option tcplog clf";
 				else if (curproxy->logformat.str == clf_http_log_format)
 					oldlogformat = "option httplog clf";
 				else if (curproxy->logformat.str == default_https_log_format)

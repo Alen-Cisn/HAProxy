@@ -35,6 +35,7 @@
 #include <haproxy/http_htx.h>
 #include <haproxy/htx.h>
 #include <haproxy/lb_chash.h>
+#include <haproxy/lb_ddqn.h>
 #include <haproxy/lb_fas.h>
 #include <haproxy/lb_fwlc.h>
 #include <haproxy/lb_fwrr.h>
@@ -655,7 +656,7 @@ int assign_server(struct stream *s)
 			     (!s->be->max_ka_queue ||
 			      server_has_room(tmpsrv) || (
 			      tmpsrv->queueslength + 1 < s->be->max_ka_queue))) &&
-			    srv_currently_usable(tmpsrv)) {
+				srv_currently_usable(tmpsrv)) {
 				list_for_each_entry(conn, &pconns->conn_list, sess_el) {
 					if (!(conn->flags & CO_FL_WAIT_XPRT)) {
 						srv = tmpsrv;
@@ -684,7 +685,8 @@ int assign_server(struct stream *s)
 		if (s->be->queueslength && s->be->served && s->be->queueslength != s->be->beconn &&
 		    (((s->be->lbprm.algo & (BE_LB_KIND|BE_LB_NEED|BE_LB_PARM)) == BE_LB_ALGO_FAS)||   // first
 		     ((s->be->lbprm.algo & (BE_LB_KIND|BE_LB_NEED|BE_LB_PARM)) == BE_LB_ALGO_RR) ||   // roundrobin
-		     ((s->be->lbprm.algo & (BE_LB_KIND|BE_LB_NEED|BE_LB_PARM)) == BE_LB_ALGO_SRR))) { // static-rr
+		     ((s->be->lbprm.algo & (BE_LB_KIND|BE_LB_NEED|BE_LB_PARM)) == BE_LB_ALGO_SRR)||   // static-rr
+		     ((s->be->lbprm.algo & (BE_LB_KIND|BE_LB_NEED|BE_LB_PARM)) == BE_LB_ALGO_DDQN))) { // ddqn
 			err = SRV_STATUS_FULL;
 			goto out;
 		}
@@ -813,6 +815,8 @@ int assign_server(struct stream *s)
 					srv = ss_get_server(s->be);
 
 				break;
+			} else if ((s->be->lbprm.algo & BE_LB_KIND) != BE_LB_KIND_DDQN) {
+				srv = ddqn_get_next_server(s->be, prev_srv);
 			}
 			/* unknown balancing algorithm */
 			err = SRV_STATUS_INTERNAL;
@@ -3204,8 +3208,12 @@ int backend_parse_balance(const char **args, char **err, struct proxy *curproxy)
 		curproxy->lbprm.algo &= ~BE_LB_ALGO;
 		curproxy->lbprm.algo |= BE_LB_ALGO_SS;
 	}
+	else if (strcmp(args[0], "ddqn") == 0) {
+		curproxy->lbprm.algo &= ~BE_LB_ALGO;
+		curproxy->lbprm.algo |= ~BE_LB_ALGO_DDQN;
+	}
 	else {
-		memprintf(err, "only supports 'roundrobin', 'static-rr', 'leastconn', 'source', 'uri', 'url_param', 'hash', 'hdr(name)', 'rdp-cookie(name)', 'log-hash' and 'sticky' options.");
+		memprintf(err, "only supports 'roundrobin', 'static-rr', 'leastconn', 'source', 'uri', 'url_param', 'hash', 'hdr(name)', 'rdp-cookie(name)', 'log-hash', 'sticky' and 'ddqn' options.");
 		return -1;
 	}
 	return 0;

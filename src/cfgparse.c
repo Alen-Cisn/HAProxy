@@ -3834,6 +3834,9 @@ out_uri_auth_compat:
 				init_server_ss(curproxy);
 			}
 			break;
+		case BE_LB_KIND_DDQN:
+			curproxy->lbprm.algo |= BE_LB_PROP_DYN;
+			break;
 		}
 		HA_RWLOCK_INIT(&curproxy->lbprm.lock);
 

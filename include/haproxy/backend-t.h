@@ -27,6 +27,7 @@
 #include <haproxy/lb_fas-t.h>
 #include <haproxy/lb_fwlc-t.h>
 #include <haproxy/lb_fwrr-t.h>
+#include <haproxy/lb_ddqn-t.h>
 #include <haproxy/lb_map-t.h>
 #include <haproxy/lb_ss-t.h>
 #include <haproxy/server-t.h>
@@ -78,6 +79,7 @@
 #define BE_LB_KIND_CB   0x00020000  /* connection-based */
 #define BE_LB_KIND_HI   0x00030000  /* hash of input (see hash inputs above) */
 #define BE_LB_KIND_SA   0x00040000  /* standalone (specific algorithms, cannot be grouped) */
+#define BE_LB_KIND_DDQN 0x00050000  /* double deep queue network */
 #define BE_LB_KIND      0x00070000  /* mask to get/clear LB algorithm */
 
 /* All known variants of load balancing algorithms. These can be cleared using
@@ -97,6 +99,7 @@
 #define BE_LB_ALGO_RCH	(BE_LB_KIND_HI | BE_LB_NEED_DATA | BE_LB_HASH_RDP) /* hash: RDP cookie value   */
 #define BE_LB_ALGO_SMP	(BE_LB_KIND_HI | BE_LB_NEED_DATA | BE_LB_HASH_SMP) /* hash: sample expression  */
 #define BE_LB_ALGO_LH	(BE_LB_KIND_HI | BE_LB_NEED_LOG  | BE_LB_HASH_SMP) /* log hash: sample expression  */
+#define BE_LB_ALGO_DDQN (BE_LB_KIND_DDQN | BE_LB_NEED_HTTP)
 #define BE_LB_ALGO      (BE_LB_KIND    | BE_LB_NEED      | BE_LB_PARM    ) /* mask to clear algo */
 
 /* Higher bits define how a given criterion is mapped to a server. In fact it

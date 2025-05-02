@@ -31,6 +31,8 @@
 !/debian
 !/scripts
 !/reg-tests
+!/.vscode
+!/haproxy.conf
 # Reject some generic files
 *.o
 *.a

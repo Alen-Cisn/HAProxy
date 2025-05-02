@@ -1,0 +1,14 @@
+{
+    "files.associations": {
+        ".fantomasignore": "ignore",
+        "*.rmd": "markdown",
+        "backend.h": "c",
+        "backend-t.h": "c",
+        "ebtree-t.h": "c",
+        "charconv": "c",
+        "lb_ddqn.h": "c",
+        "eb32tree.h": "c",
+        "onnxruntime_c_api.h": "c"
+    },
+    "editor.tabSize": 8
+}
